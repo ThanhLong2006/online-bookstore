@@ -1,0 +1,70 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: secure-task-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/secure_task}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: ${DB_MAX_POOL_SIZE:20}
+      minimum-idle: ${DB_MIN_IDLE:5}
+      idle-timeout: 300000
+      max-lifetime: 900000
+      connection-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:validate}
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          time_zone: UTC
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${SMTP_AUTH:false}
+          starttls:
+            enable: ${SMTP_STARTTLS:false}
+  cache:
+    type: concurrentmap
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  jwt:
+    secret: ${JWT_SECRET:change-me-please-change-me-please-change-me-please-change-me}
+    access-token-minutes: ${JWT_ACCESS_TOKEN_MINUTES:15}
+    refresh-token-days: ${JWT_REFRESH_TOKEN_DAYS:7}
+    issuer: secure-task-api
+  cookie:
+    secure: ${COOKIE_SECURE:false}
+  rate-limit:
+    capacity: ${RATE_LIMIT_CAPACITY:200}
+    refill-per-minute: ${RATE_LIMIT_REFILL_PER_MINUTE:200}

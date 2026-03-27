@@ -1,0 +1,83 @@
+# ==================== ROOT ====================
+# Environment variables - RẤT QUAN TRỌNG (tránh đẩy secret)
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+*.env
+
+# Logs và temporary files
+*.log
+logs/
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.classpath
+.project
+.eclipse/
+*.sublime-*
+
+# ==================== FRONTEND (ReactJS) ====================
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/coverage/
+
+# ==================== BACKEND (Spring Boot) ====================
+# Maven
+backend/target/
+backend/.mvn/timing.properties
+backend/mvnw
+backend/mvnw.cmd
+
+# Gradle (nếu bạn dùng Gradle)
+backend/.gradle/
+backend/build/
+backend/gradlew
+backend/gradlew.bat
+
+# Spring Boot specific
+backend/application-dev.yml
+backend/application-prod.yml
+backend/src/main/resources/application-dev.*
+backend/src/main/resources/application-prod.*
+
+# Logs Spring
+backend/*.log
+backend/logs/
+
+# ==================== General Java ====================
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# ==================== Không ignore những file quan trọng ====================
+# Giữ lại file mẫu để người khác biết cấu hình
+!**/application.yml.example
+!**/application.properties.example
+!**/.env.example
