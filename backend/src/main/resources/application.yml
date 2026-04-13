@@ -26,6 +26,9 @@ spring:
         format_sql: false
         jdbc:
           time_zone: UTC
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
   mail:
     host: ${SMTP_HOST:localhost}
     port: ${SMTP_PORT:1025}

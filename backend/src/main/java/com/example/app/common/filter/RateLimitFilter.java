@@ -28,12 +28,18 @@ public class RateLimitFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         String key = request.getRemoteAddr();
         Bucket bucket = buckets.computeIfAbsent(key, k -> Bucket.builder()
                 .addLimit(Bandwidth.classic(capacity, Refill.intervally(refillPerMinute, Duration.ofMinutes(1))))
                 .build());
         if (!bucket.tryConsume(1)) {
             response.setStatus(429);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
             response.getWriter().write("{\"message\":\"Too many requests\"}");
             return;
         }

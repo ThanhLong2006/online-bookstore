@@ -45,7 +45,8 @@ public class AuthController {
     @PostMapping("/refresh-token")
     public ResponseEntity<AuthDtos.AuthResponse> refreshToken(
             @RequestBody(required = false) AuthDtos.RefreshTokenRequest req,
-            HttpServletRequest request) {
+            HttpServletRequest request,
+            HttpServletResponse response) {
         String token = req == null ? null : req.refreshToken();
         if ((token == null || token.isBlank()) && request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
@@ -56,12 +57,25 @@ public class AuthController {
             }
         }
         AuthDtos.AuthResponse auth = authService.refresh(token);
+        attachRefreshCookie(response, auth.refreshToken());
         return ResponseEntity.ok(auth);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestBody(required = false) AuthDtos.RefreshTokenRequest req, HttpServletResponse response) {
-        authService.logout(req == null ? null : req.refreshToken());
+    public ResponseEntity<Void> logout(
+            @RequestBody(required = false) AuthDtos.RefreshTokenRequest req,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        String token = req == null ? null : req.refreshToken();
+        if ((token == null || token.isBlank()) && request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("refresh_token".equals(cookie.getName())) {
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        authService.logout(token);
         clearRefreshCookie(response);
         return ResponseEntity.ok().build();
     }

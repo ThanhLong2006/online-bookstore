@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -26,7 +28,16 @@ public class JwtService {
 
     @PostConstruct
     void init() {
-        key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        if (secret == null || secret.isBlank()) {
+            throw new IllegalStateException("app.jwt.secret must be set to a non-empty value");
+        }
+        byte[] raw;
+        try {
+            raw = MessageDigest.getInstance("SHA-512").digest(secret.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("SHA-512 not available", e);
+        }
+        key = Keys.hmacShaKeyFor(raw);
     }
 
     public String generateAccessToken(String subject, Map<String, Object> claims) {

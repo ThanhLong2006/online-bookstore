@@ -24,6 +24,9 @@ public class TaskService {
 
     @Transactional(readOnly = true)
     public Page<TaskDtos.TaskResponse> list(String currentEmail, String search, String status, Pageable pageable) {
+        if (pageable.getPageSize() > 100) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "Page size must not exceed 100");
+        }
         User current = getUser(currentEmail);
         String keyword = search == null ? "" : search.trim();
         String statusFilter = status == null ? "" : status.trim();

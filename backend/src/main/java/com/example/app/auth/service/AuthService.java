@@ -14,6 +14,7 @@ import com.example.app.user.entity.User;
 import com.example.app.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +32,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+    private final CacheManager cacheManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -70,6 +72,10 @@ public class AuthService {
         User user = userToken.getUser();
         user.setEmailVerified(true);
         userToken.setUsed(true);
+        var cache = cacheManager.getCache("profile");
+        if (cache != null) {
+            cache.evict(user.getEmail());
+        }
     }
 
     @Transactional
@@ -80,6 +86,7 @@ public class AuthService {
         if (!user.isEmailVerified()) {
             throw new AppException(HttpStatus.FORBIDDEN, "Email not verified");
         }
+        refreshTokenRepository.deleteByUser(user);
         String access = jwtService.generateAccessToken(user.getEmail(), Map.of("role", user.getRole().name(), "uid", user.getId()));
         String refresh = issueRefreshToken(user);
         return new AuthDtos.AuthResponse(access, refresh, "Bearer");
@@ -87,14 +94,20 @@ public class AuthService {
 
     @Transactional
     public AuthDtos.AuthResponse refresh(String refreshToken) {
+        if (refreshToken == null || refreshToken.isBlank()) {
+            throw new AppException(HttpStatus.UNAUTHORIZED, "Refresh token required");
+        }
         RefreshToken token = refreshTokenRepository.findByTokenAndRevokedFalse(refreshToken)
                 .orElseThrow(() -> new AppException(HttpStatus.UNAUTHORIZED, "Invalid refresh token"));
         if (token.getExpiresAt().isBefore(Instant.now())) {
+            token.setRevoked(true);
             throw new AppException(HttpStatus.UNAUTHORIZED, "Refresh token expired");
         }
+        token.setRevoked(true);
         User user = token.getUser();
         String access = jwtService.generateAccessToken(user.getEmail(), Map.of("role", user.getRole().name(), "uid", user.getId()));
-        return new AuthDtos.AuthResponse(access, refreshToken, "Bearer");
+        String newRefresh = issueRefreshToken(user);
+        return new AuthDtos.AuthResponse(access, newRefresh, "Bearer");
     }
 
     @Transactional

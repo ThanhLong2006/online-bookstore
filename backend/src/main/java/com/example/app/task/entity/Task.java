@@ -12,7 +12,12 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tasks")
+@Table(
+        name = "tasks",
+        indexes = {
+                @Index(name = "idx_tasks_owner_id", columnList = "owner_id"),
+                @Index(name = "idx_tasks_owner_status", columnList = "owner_id,status")
+        })
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
