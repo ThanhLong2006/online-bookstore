@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { CartItem } from '../components/books/CartItem'
 import { useCart } from '../contexts/CartContext'
 import { formatVND } from '../utils/format'
 import toast from 'react-hot-toast'
@@ -46,90 +47,13 @@ export function CartPage() {
       ) : (
         <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
           <div className="space-y-3">
-            {items.map(({ book, quantity }) => (
-              <div
-                key={String(book.id)}
-                className="flex gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
-              >
-                <Link
-                  to={`/books/${book.id}`}
-                  className="h-24 w-20 flex-none overflow-hidden rounded-xl bg-slate-100"
-                >
-                  {book.coverUrl ? (
-                    <img src={book.coverUrl} alt={book.title} className="h-full w-full object-cover" />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center text-xs text-slate-500">
-                      No cover
-                    </div>
-                  )}
-                </Link>
-
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <Link
-                        to={`/books/${book.id}`}
-                        className="line-clamp-2 text-sm font-semibold text-slate-900 hover:underline"
-                      >
-                        {book.title}
-                      </Link>
-                      <div className="mt-0.5 text-xs text-slate-500">{book.author ?? '—'}</div>
-                      {book.category?.name ? (
-                        <div className="mt-1 inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700">
-                          {book.category.name}
-                        </div>
-                      ) : null}
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => removeItem(book.id)}
-                      className="rounded-lg px-2 py-1 text-xs font-semibold text-rose-700 transition hover:bg-rose-50"
-                    >
-                      Xoá
-                    </button>
-                  </div>
-
-                  <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setQuantity(book.id, Math.max(1, quantity - 1))}
-                        className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-800 transition hover:bg-slate-50"
-                        aria-label="Giảm"
-                      >
-                        −
-                      </button>
-                      <input
-                        inputMode="numeric"
-                        value={String(quantity)}
-                        onChange={(e) => {
-                          const raw = e.target.value.replace(/[^\d]/g, '')
-                          const v = Number(raw || '1')
-                          setQuantity(book.id, v)
-                        }}
-                        className="h-9 w-16 rounded-xl border border-slate-200 bg-white px-2 text-center text-sm outline-none focus:border-indigo-400"
-                        aria-label="Số lượng"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setQuantity(book.id, quantity + 1)}
-                        className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-800 transition hover:bg-slate-50"
-                        aria-label="Tăng"
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    <div className="text-right">
-                      <div className="text-xs text-slate-500">Đơn giá: {formatVND(book.price)}</div>
-                      <div className="text-sm font-bold text-indigo-700">
-                        {formatVND(book.price * quantity)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {items.map((item) => (
+              <CartItem
+                key={String(item.book.id)}
+                item={item}
+                onQuantityChange={(quantity) => setQuantity(item.book.id, quantity)}
+                onRemove={() => removeItem(item.book.id)}
+              />
             ))}
           </div>
 

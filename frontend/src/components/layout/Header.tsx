@@ -4,6 +4,7 @@ import { Link, NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { useCart } from '../../contexts/CartContext'
 import { useWishlist } from '../../contexts/WishlistContext'
 import { useCompare } from '../../contexts/CompareContext'
+import { useTheme } from '../../contexts/ThemeContext'
 import { clearAuthUser, getAuthUser, onAuthChange } from '../../services/auth'
 import { mockBooks } from '../../services/api/mockData'
 import { useDebouncedValue } from '../../hooks/useDebouncedValue'
@@ -28,6 +29,7 @@ export function Header() {
   const [activeIndex, setActiveIndex] = useState<number>(-1)
   const blurTimeoutRef = useRef<number | null>(null)
   const searchWrapRef = useRef<HTMLDivElement | null>(null)
+  const { theme, toggleTheme } = useTheme()
   const debouncedQ = useDebouncedValue(q, 160)
   const suggestions = useMemo(() => {
     const needle = debouncedQ.trim().toLowerCase()
@@ -181,6 +183,26 @@ export function Header() {
         </nav>
 
         <div className="flex-1" />
+
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="hidden h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-800 shadow-sm transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800 md:inline-flex"
+          aria-label={theme === 'dark' ? 'Chế độ sáng' : 'Chế độ tối'}
+        >
+          {theme === 'dark' ? (
+            <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
+              <path fill="currentColor" d="M12 3.5a1 1 0 0 1 1 1V7a1 1 0 1 1-2 0V4.5a1 1 0 0 1 1-1Zm7.78 4.72a1 1 0 0 1 0 1.42l-1.77 1.77a1 1 0 0 1-1.42-1.42l1.77-1.77a1 1 0 0 1 1.42 0ZM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-8.28-6.78a1 1 0 0 1 1.42 0l1.77 1.77a1 1 0 1 1-1.42 1.42L4.72 11.64a1 1 0 0 1 0-1.42ZM17 12a1 1 0 0 1 1 1h2.5a1 1 0 1 1 0 2H18a1 1 0 1 1-1-1Zm-10 1a1 1 0 1 1-2 0h2a1 1 0 0 1 1-1Zm10.07 6.07a1 1 0 0 1-1.42 1.42l-1.77-1.77a1 1 0 1 1 1.42-1.42l1.77 1.77Zm-10.14 0l1.77-1.77a1 1 0 0 1 1.42 1.42l-1.77 1.77a1 1 0 1 1-1.42-1.42ZM12 17.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M12 4.5a1 1 0 0 1 1 1V7a1 1 0 1 1-2 0V5.5a1 1 0 0 1 1-1Zm5.03 2.52a1 1 0 0 1 0 1.42l-1.06 1.06a1 1 0 1 1-1.42-1.42l1.06-1.06a1 1 0 0 1 1.42 0ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-7 3a1 1 0 1 1-2 0h2Zm13 0a1 1 0 1 1 2 0h-2Zm-8.97 4.97a1 1 0 0 1 1.42 0l1.06 1.06a1 1 0 0 1-1.42 1.42l-1.06-1.06a1 1 0 0 1 0-1.42ZM12 16.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm-5.03-1.03l1.06 1.06a1 1 0 1 1-1.42 1.42L5.55 16.9a1 1 0 1 1 1.42-1.42Z"
+              />
+            </svg>
+          )}
+        </button>
 
         <form onSubmit={onSubmit} className="hidden lg:block">
           <div className="relative" ref={searchWrapRef}>

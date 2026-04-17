@@ -3,18 +3,34 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light;
+  --page-bg: #f8fafc;
+  --page-text: #0f172a;
+}
+
+.dark {
   color-scheme: dark;
+  --page-bg: #020617;
+  --page-text: #e2e8f0;
 }
 
 html,
 body,
 #root {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
   margin: 0;
   font-family: Inter, system-ui, sans-serif;
-  background: #0b1220;
-  color: #e5e7eb;
+  background: var(--page-bg);
+  color: var(--page-text);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }

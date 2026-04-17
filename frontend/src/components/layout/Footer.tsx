@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white">
+    <footer className="border-t border-slate-200 bg-white transition duration-300 dark:border-slate-800 dark:bg-slate-950">
       <div className="mx-auto w-full max-w-6xl px-4 py-10">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-3">

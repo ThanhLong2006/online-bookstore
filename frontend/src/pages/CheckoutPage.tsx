@@ -17,12 +17,19 @@ export function CheckoutPage() {
   const navigate = useNavigate()
   const { items, subtotal, totalQuantity } = useCart()
   const [method, setMethod] = useState<PaymentMethod>('visa')
+  const [customerName, setCustomerName] = useState('')
+  const [address, setAddress] = useState('')
+  const [phone, setPhone] = useState('')
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false)
 
   const invoice = useMemo(() => {
     return {
       id: `INV-${Math.floor(Date.now() / 1000)}`,
       createdAt: new Date().toISOString(),
       method,
+      customerName,
+      address,
+      phone,
       items: items.map((it) => ({
         id: it.book.id,
         title: it.book.title,
@@ -32,7 +39,19 @@ export function CheckoutPage() {
       subtotal,
       total: subtotal,
     }
-  }, [items, method, subtotal])
+  }, [address, customerName, items, method, phone, subtotal])
+
+  function handlePlaceOrder() {
+    if (!customerName.trim() || !address.trim() || !phone.trim()) {
+      toast.error('Vui lòng nhập đầy đủ thông tin khách hàng.')
+      return
+    }
+
+    setIsPlacingOrder(true)
+    sessionStorage.setItem('qls_invoice', JSON.stringify(invoice))
+    toast.success('Đặt hàng thành công!')
+    navigate('/invoice', { replace: true })
+  }
 
   if (!items.length) {
     return (
@@ -63,8 +82,42 @@ export function CheckoutPage() {
 
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <div className="space-y-4">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="text-sm font-semibold text-slate-900">Phương thức thanh toán</div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+            <div className="text-sm font-semibold text-slate-900 dark:text-slate-100">Thông tin khách hàng</div>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <label className="block">
+                <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Họ và tên</span>
+                <input
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  placeholder="Nguyễn Văn A"
+                  className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-indigo-400 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+                />
+              </label>
+              <label className="block">
+                <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Số điện thoại</span>
+                <input
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="0912 345 678"
+                  className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-indigo-400 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+                />
+              </label>
+              <label className="sm:col-span-2 block">
+                <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Địa chỉ giao hàng</span>
+                <textarea
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                  rows={4}
+                  className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-indigo-400 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+            <div className="text-sm font-semibold text-slate-900 dark:text-slate-100">Phương thức thanh toán</div>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {METHODS.map((m) => (
                 <button
@@ -77,7 +130,7 @@ export function CheckoutPage() {
                   className={[
                     'flex items-center justify-between rounded-2xl border p-4 text-left transition',
                     m.tone,
-                    method === m.id ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-900',
+                    method === m.id ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100',
                   ].join(' ')}
                 >
                   <div className="space-y-1">
@@ -101,18 +154,18 @@ export function CheckoutPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="text-sm font-semibold text-slate-900">Đơn hàng</div>
-            <div className="mt-3 space-y-2 text-sm text-slate-700">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+            <div className="text-sm font-semibold text-slate-900 dark:text-slate-100">Đơn hàng</div>
+            <div className="mt-3 space-y-2 text-sm text-slate-700 dark:text-slate-300">
               {items.map((it) => (
                 <div key={String(it.book.id)} className="flex items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <div className="line-clamp-1 font-semibold text-slate-900">{it.book.title}</div>
-                    <div className="text-xs text-slate-500">
+                    <div className="line-clamp-1 font-semibold text-slate-900 dark:text-slate-100">{it.book.title}</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">
                       {it.quantity} × {formatVND(it.book.price)}
                     </div>
                   </div>
-                  <div className="font-semibold text-indigo-700">{formatVND(it.quantity * it.book.price)}</div>
+                  <div className="font-semibold text-indigo-700 dark:text-indigo-300">{formatVND(it.quantity * it.book.price)}</div>
                 </div>
               ))}
             </div>
@@ -139,13 +192,11 @@ export function CheckoutPage() {
 
           <button
             type="button"
-            onClick={() => {
-              sessionStorage.setItem('qls_invoice', JSON.stringify(invoice))
-              navigate('/invoice', { replace: false })
-            }}
-            className="mt-4 w-full rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+            onClick={handlePlaceOrder}
+            disabled={isPlacingOrder}
+            className="mt-4 w-full rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Tạo hoá đơn
+            {isPlacingOrder ? 'Đang xử lý...' : 'Tạo hoá đơn'}
           </button>
         </div>
       </div>
