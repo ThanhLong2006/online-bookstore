@@ -4,6 +4,7 @@ export type AuthUser = {
   name: string
   email: string
   role: UserRole
+  avatarUrl?: string
 }
 
 const USER_KEY = 'qls_user'
@@ -17,7 +18,7 @@ export function getAuthUser(): AuthUser | null {
     if (!parsed || typeof parsed !== 'object') return null
     if (typeof parsed.name !== 'string' || typeof parsed.email !== 'string') return null
     const role = parsed.role === 'admin' ? 'admin' : 'user'
-    return { name: parsed.name, email: parsed.email, role }
+    return { name: parsed.name, email: parsed.email, role, avatarUrl: parsed.avatarUrl }
   } catch {
     return null
   }

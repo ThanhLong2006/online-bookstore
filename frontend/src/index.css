@@ -2,16 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ====== BOOK STORE COLOR THEME ====== */
 :root {
   color-scheme: light;
-  --page-bg: #f8fafc;
-  --page-text: #0f172a;
+
+  /* Màu nền kem ấm – phù hợp đề tài sách */
+  --page-bg: #fdf6ec;
+  --page-text: #2c1a0e;
+
+  /* Primary – nâu sách */
+  --primary: #8b4513;
+  --primary-light: #a0522d;
+  --primary-dark: #6b340f;
+
+  /* Accent – vàng mật ong */
+  --accent: #d4a574;
+  --accent-light: #e8c9a0;
+
+  /* Surface */
+  --surface: #ffffff;
+  --surface-warm: #fef9f3;
+  --border: #e8d5bf;
+  --border-light: #f3e8d8;
 }
 
 .dark {
   color-scheme: dark;
-  --page-bg: #020617;
-  --page-text: #e2e8f0;
+  --page-bg: #1a0f07;
+  --page-text: #f0e6d8;
+  --primary: #d4a574;
+  --primary-light: #e8c9a0;
+  --surface: #2a1a0e;
+  --surface-warm: #231408;
+  --border: #4a3020;
+  --border-light: #3a2418;
 }
 
 html,
@@ -22,11 +46,20 @@ body,
 
 body {
   margin: 0;
-  font-family: Inter, system-ui, sans-serif;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   background: var(--page-bg);
   color: var(--page-text);
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* Scrollbar thanh lịch */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
+
+/* Selection */
+::selection { background: #d4a57440; color: var(--primary-dark); }
 
 button,
 input,
@@ -34,3 +67,38 @@ textarea,
 select {
   font: inherit;
 }
+
+/* Book card hover animation */
+.book-card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.book-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(139, 69, 19, 0.15);
+}
+
+/* Warm gradient background for sections */
+.section-warm {
+  background: linear-gradient(135deg, #fef9f3 0%, #fdf0e0 100%);
+}
+
+/* Badge styles */
+.badge-new {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+
+.badge-sale {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+}
+

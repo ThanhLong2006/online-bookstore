@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { CartItem } from '../components/books/CartItem'
 import { useCart } from '../contexts/CartContext'
 import { formatVND } from '../utils/format'
-import toast from 'react-hot-toast'
 
 export function CartPage() {
   const { items, subtotal, totalQuantity, removeItem, setQuantity, clear } = useCart()
@@ -27,7 +26,7 @@ export function CartPage() {
 
       {items.length === 0 ? (
         <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-700">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-700">
             <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden="true">
               <path
                 fill="currentColor"
@@ -39,7 +38,8 @@ export function CartPage() {
           <p className="mt-1 text-sm text-slate-600">Thêm vài cuốn sách để bắt đầu mua sắm.</p>
           <Link
             to="/books"
-            className="mt-4 inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+            className="mt-4 inline-flex rounded-xl px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
+            style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
           >
             Khám phá sách
           </Link>
@@ -74,20 +74,13 @@ export function CartPage() {
                 <span className="text-lg font-extrabold text-slate-900">{formatVND(subtotal)}</span>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                if (!items.length) {
-                  toast.error('Giỏ hàng đang trống')
-                  return
-                }
-              }}
-              className="mt-4 w-full rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+            <Link
+              to="/checkout"
+              className="mt-4 block w-full text-center rounded-xl px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
+              style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
             >
-              <Link to="/checkout" className="block">
-                Thanh toán
-              </Link>
-            </button>
+              Thanh toán
+            </Link>
             <Link
               to="/books"
               className="mt-2 inline-flex w-full items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-50"

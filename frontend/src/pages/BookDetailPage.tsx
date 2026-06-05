@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom'
 import { getBook } from '../services/api/books'
 import type { Book } from '../types/book'
 import { useCart } from '../contexts/CartContext'
+import { useWishlist } from '../contexts/WishlistContext'
+import { useCompare } from '../contexts/CompareContext'
 import { formatVND } from '../utils/format'
 import { mockGetRelatedBooks } from '../services/api/mockData'
 
@@ -12,7 +14,13 @@ export function BookDetailPage() {
   const [book, setBook] = useState<Book | null>(null)
   const [error, setError] = useState<string | null>(null)
   const { addItem } = useCart()
+  const { has: hasWish, toggle: toggleWish } = useWishlist()
+  const { has: hasCompare, toggle: toggleCompare } = useCompare()
+  const [quantity, setQuantity] = useState(1)
   const [related, setRelated] = useState<Book[]>([])
+
+  const wished = book ? hasWish(book.id) : false
+  const compared = book ? hasCompare(book.id) : false
 
   useEffect(() => {
     if (!id) return
@@ -117,37 +125,85 @@ export function BookDetailPage() {
 
           <div className="grid gap-3 sm:grid-cols-3">
             <Spec label="Nhà xuất bản" value={book.publisher ?? '—'} />
-            <Spec label="Năm" value={typeof book.year === 'number' ? String(book.year) : '—'} />
+            <Spec label="Năm xuất bản" value={typeof book.year === 'number' ? String(book.year) : '—'} />
             <Spec label="Số trang" value={typeof book.pages === 'number' ? String(book.pages) : '—'} />
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-700 shadow-sm">
-            <div className="text-sm font-semibold text-slate-900">Mô tả chi tiết</div>
-            <p className="mt-1 whitespace-pre-line leading-relaxed text-slate-600">
+          <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-700 shadow-sm dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+            <div className="text-sm font-semibold text-slate-900 dark:text-white">Mô tả chi tiết</div>
+            <p className="mt-1 whitespace-pre-line leading-relaxed text-slate-600 dark:text-slate-400">
               {book.description ?? 'Chưa có mô tả.'}
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          {book.stock && book.stock > 0 ? (
+            <div className="flex items-center gap-4 border-y border-slate-100 py-3 dark:border-slate-850">
+              <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Số lượng:</span>
+              <div className="flex items-center rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  className="inline-flex h-9 w-9 items-center justify-center font-bold text-slate-600 hover:text-slate-800 transition dark:text-slate-400"
+                >
+                  -
+                </button>
+                <span className="inline-flex h-9 w-10 items-center justify-center text-sm font-bold text-slate-800 dark:text-white">
+                  {quantity}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => Math.min(book.stock || 99, q + 1))}
+                  className="inline-flex h-9 w-9 items-center justify-center font-bold text-slate-600 hover:text-slate-800 transition dark:text-slate-400"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ) : null}
+
+          <div className="flex flex-wrap gap-3 items-center">
             <button
               type="button"
-              onClick={() => addItem(book, 1)}
-              className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+              disabled={!book.stock || book.stock <= 0}
+              onClick={() => addItem(book, quantity)}
+              className="rounded-xl bg-slate-900 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Thêm vào giỏ hàng
             </button>
             <Link
               to="/cart"
-              className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500"
+              className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500"
             >
               Xem giỏ hàng
             </Link>
-            <Link
-              to="/books"
-              className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-50"
+            
+            <button
+              type="button"
+              onClick={() => toggleWish(book)}
+              className={[
+                'inline-flex h-10 w-10 items-center justify-center rounded-xl border shadow-sm transition',
+                wished
+                  ? 'border-rose-200 bg-rose-50 text-rose-600 dark:border-rose-950 dark:bg-rose-950/30'
+                  : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-800',
+              ].join(' ')}
+              title="Yêu thích"
             >
-              Tiếp tục mua sắm
-            </Link>
+              <svg viewBox="0 0 24 24" className="h-5 w-5"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => toggleCompare(book)}
+              className={[
+                'inline-flex h-10 w-10 items-center justify-center rounded-xl border shadow-sm transition',
+                compared
+                  ? 'border-indigo-200 bg-indigo-50 text-indigo-700 dark:border-indigo-950 dark:bg-indigo-950/30 dark:text-indigo-400'
+                  : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-800',
+              ].join(' ')}
+              title="So sánh"
+            >
+              <svg viewBox="0 0 24 24" className="h-5 w-5"><path fill="currentColor" d="M5 9h2v10H5V9Zm6-4h2v14h-2V5Zm6 7h2v7h-2v-7Z" /></svg>
+            </button>
           </div>
         </div>
       </div>

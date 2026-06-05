@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { BookCard } from '../components/books/BookCard'
 import { FilterSidebar } from '../components/books/FilterSidebar'
@@ -118,34 +118,24 @@ export function BooksPage() {
       />
 
       <div className="space-y-5">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Danh sách sách</h1>
+        <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 dark:border-slate-800 lg:flex-row lg:items-center lg:justify-between">
+          <div className="space-y-1">
+            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">Danh sách sách</h1>
             <p className="text-sm text-slate-600 dark:text-slate-400">
               Tìm kiếm và lọc sách theo thể loại, giá và sắp xếp để tìm được lựa chọn tốt nhất.
             </p>
           </div>
-          <div className="max-w-md">
-            <SearchBar value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onSubmit={handleSearchSubmit} />
-          </div>
-        </div>
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">Danh sách sách</h1>
-            <p className="text-sm text-slate-600">
-              Tìm kiếm qua query <code className="rounded bg-slate-100 px-1.5 py-0.5">q</code>
-              , phân trang qua <code className="rounded bg-slate-100 px-1.5 py-0.5">page</code>
-              .
-            </p>
-          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="w-full sm:w-auto">
+              <SearchBar value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} onSubmit={handleSearchSubmit} />
+            </div>
 
-          <div className="flex flex-wrap items-center gap-2">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-slate-600">Sắp xếp</span>
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider dark:text-slate-400">Sắp xếp</span>
               <select
                 value={sort}
                 onChange={(e) => setParam('sort', e.target.value)}
-                className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
+                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
               >
                 <option value="newest">Mới nhất</option>
                 <option value="price_asc">Giá tăng dần</option>
@@ -153,22 +143,24 @@ export function BooksPage() {
               </select>
             </div>
 
-            <span className="text-sm text-slate-600">Trang</span>
-            <select
-              value={String(page)}
-              onChange={(e) => {
-                const next = new URLSearchParams(searchParams)
-                next.set('page', e.target.value)
-                setSearchParams(next)
-              }}
-              className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
-            >
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <option key={i + 1} value={String(i + 1)}>
-                  {i + 1}
-                </option>
-              ))}
-            </select>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider dark:text-slate-400">Trang</span>
+              <select
+                value={String(page)}
+                onChange={(e) => {
+                  const next = new URLSearchParams(searchParams)
+                  next.set('page', e.target.value)
+                  setSearchParams(next)
+                }}
+                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm transition focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+              >
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <option key={i + 1} value={String(i + 1)}>
+                    {i + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
@@ -229,13 +221,5 @@ export function BooksPage() {
       </div>
     </div>
   )
-}
-
-function formatCurrencyCompact(v: number) {
-  try {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(v)
-  } catch {
-    return `${v}₫`
-  }
 }
 

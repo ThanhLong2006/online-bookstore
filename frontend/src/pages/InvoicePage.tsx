@@ -5,6 +5,9 @@ type Invoice = {
   id: string
   createdAt: string
   method: string
+  customerName?: string
+  phone?: string
+  address?: string
   items: { id: string | number; title: string; price: number; quantity: number }[]
   subtotal: number
   total: number
@@ -37,7 +40,8 @@ export function InvoicePage() {
         <p className="mt-1 text-sm text-slate-600">Vui lòng tạo hoá đơn từ trang Thanh toán.</p>
         <Link
           to="/checkout"
-          className="mt-4 inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+          className="mt-4 inline-flex rounded-xl px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
+          style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
         >
           Đi tới Thanh toán
         </Link>
@@ -58,7 +62,8 @@ export function InvoicePage() {
           <button
             type="button"
             onClick={() => window.print()}
-            className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
+            className="rounded-xl px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
+            style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
           >
             In hoá đơn
           </button>
@@ -78,7 +83,7 @@ export function InvoicePage() {
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm print:border-none print:shadow-none">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <div className="text-sm font-semibold text-indigo-700">SachStore</div>
+            <div className="text-sm font-bold" style={{ color: '#8b4513' }}>SachStore</div>
             <div className="mt-1 text-2xl font-extrabold tracking-tight text-slate-900">INVOICE</div>
             <div className="mt-2 text-sm text-slate-600">
               Mã hoá đơn: <span className="font-semibold text-slate-900">{invoice.id}</span>
@@ -89,6 +94,14 @@ export function InvoicePage() {
             <div className="text-sm text-slate-600">
               Thanh toán: <span className="font-semibold text-slate-900">{methodLabel(invoice.method)}</span>
             </div>
+            {invoice.customerName && (
+              <div className="mt-4 border-t border-slate-100 pt-3">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-400">Khách hàng nhận hàng</div>
+                <div className="mt-1 text-sm font-semibold text-slate-900">{invoice.customerName}</div>
+                {invoice.phone && <div className="text-xs text-slate-600">SĐT: {invoice.phone}</div>}
+                {invoice.address && <div className="mt-0.5 text-xs text-slate-600 max-w-xs leading-relaxed">Địa chỉ: {invoice.address}</div>}
+              </div>
+            )}
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
@@ -118,7 +131,7 @@ export function InvoicePage() {
                   <td className="px-4 py-3 font-semibold text-slate-900">{it.title}</td>
                   <td className="px-4 py-3 text-right text-slate-700">{formatVND(it.price)}</td>
                   <td className="px-4 py-3 text-right text-slate-700">{it.quantity}</td>
-                  <td className="px-4 py-3 text-right font-semibold text-indigo-700">
+                  <td className="px-4 py-3 text-right font-bold" style={{ color: '#8b4513' }}>
                     {formatVND(it.price * it.quantity)}
                   </td>
                 </tr>
@@ -147,7 +160,7 @@ export function InvoicePage() {
       </div>
 
       <div className="print:hidden">
-        <Link to="/" className="text-sm font-semibold text-indigo-700 hover:underline">
+        <Link to="/" className="text-sm font-bold hover:underline" style={{ color: '#8b4513' }}>
           ← Về trang chủ
         </Link>
       </div>
