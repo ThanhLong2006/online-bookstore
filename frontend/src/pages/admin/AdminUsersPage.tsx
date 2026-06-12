@@ -48,7 +48,7 @@ export function AdminUsersPage() {
   return (
     <div className="space-y-5">
       <div>
-        <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#8b4513' }}>Quản trị</div>
+        <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#1A365D' }}>Quản trị</div>
         <h1 className="text-2xl font-extrabold tracking-tight text-stone-900">👥 Quản lý người dùng</h1>
         <p className="text-sm text-stone-500">Xem, phân quyền và quản lý tài khoản thành viên.</p>
       </div>
@@ -85,7 +85,7 @@ export function AdminUsersPage() {
           {(['all','user','admin'] as const).map((r) => (
             <button key={r} onClick={() => setFilterRole(r)}
               className={`rounded-xl px-3 py-2 text-xs font-bold transition border ${filterRole === r ? 'text-white border-transparent' : 'bg-white text-stone-600 border-amber-200 hover:bg-amber-50'}`}
-              style={filterRole === r ? { background: 'linear-gradient(135deg, #8b4513, #a0522d)' } : {}}>
+              style={filterRole === r ? { background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' } : {}}>
               {r === 'all' ? 'Tất cả' : r === 'admin' ? '👑 Admin' : '👤 User'}
             </button>
           ))}
@@ -112,7 +112,7 @@ export function AdminUsersPage() {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-extrabold text-white"
-                        style={{ background: u.role === 'admin' ? 'linear-gradient(135deg, #8b4513, #a0522d)' : '#94a3b8' }}>
+                        style={{ background: u.role === 'admin' ? 'linear-gradient(135deg, #1A365D, #2B6CB0)' : '#94a3b8' }}>
                         {u.name[0]?.toUpperCase()}
                       </div>
                       <div>
@@ -123,7 +123,7 @@ export function AdminUsersPage() {
                   </td>
                   <td className="px-4 py-3">
                     {u.role === 'admin'
-                      ? <span className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold text-white" style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}>👑 Admin</span>
+                      ? <span className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold text-white" style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}>👑 Admin</span>
                       : <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-600">👤 User</span>
                     }
                   </td>

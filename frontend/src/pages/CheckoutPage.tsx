@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useCart } from '../contexts/CartContext'
@@ -58,6 +58,12 @@ const METHODS: { id: PaymentMethod; label: string; tone: string; icon: React.Rea
   },
 ]
 
+const SHIPPING_VOUCHERS = [
+  { code: 'FREESHIP30', desc: 'Freeship (Giảm tối đa 30k)', discount: 30000 },
+  { code: 'NHANH24H', desc: 'Giao hỏa tốc (Giảm 15k)', discount: 15000 },
+  { code: 'VIPSACH50', desc: 'Voucher VIP (Giảm ngay 50k)', discount: 50000 },
+]
+
 export function CheckoutPage() {
   const navigate = useNavigate()
   const { items, subtotal, totalQuantity, clear } = useCart()
@@ -66,6 +72,23 @@ export function CheckoutPage() {
   const [address, setAddress] = useState('')
   const [phone, setPhone] = useState('')
   const [isPlacingOrder, setIsPlacingOrder] = useState(false)
+
+  const [activeVoucher, setActiveVoucher] = useState<string | null>(() => {
+    return sessionStorage.getItem('cart_active_voucher') || null
+  })
+  const shippingFee = 30000
+  const shippingDiscount = useMemo(() => {
+    if (!activeVoucher) return 0
+    return SHIPPING_VOUCHERS.find((v) => v.code === activeVoucher)?.discount ?? 0
+  }, [activeVoucher])
+  const total = useMemo(() => {
+    return Math.max(0, subtotal + shippingFee - shippingDiscount)
+  }, [subtotal, shippingFee, shippingDiscount])
+
+  useEffect(() => {
+    sessionStorage.setItem('cart_active_voucher', activeVoucher || '')
+    sessionStorage.setItem('cart_shipping_discount', String(shippingDiscount))
+  }, [activeVoucher, shippingDiscount])
 
   const invoice = useMemo(() => {
     return {
@@ -82,9 +105,12 @@ export function CheckoutPage() {
         quantity: it.quantity,
       })),
       subtotal,
-      total: subtotal,
+      shippingFee,
+      shippingDiscount,
+      activeVoucher: activeVoucher || undefined,
+      total,
     }
-  }, [address, customerName, items, method, phone, subtotal])
+  }, [address, customerName, items, method, phone, subtotal, shippingFee, shippingDiscount, activeVoucher, total])
 
   function handlePlaceOrder() {
     if (!customerName.trim() || !address.trim() || !phone.trim()) {
@@ -107,7 +133,7 @@ export function CheckoutPage() {
         <Link
           to="/books"
           className="mt-4 inline-flex rounded-xl px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
-          style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
+          style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}
         >
           Khám phá sách
         </Link>
@@ -122,7 +148,7 @@ export function CheckoutPage() {
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">Thanh toán</h1>
           <p className="text-sm text-slate-600">Chọn phương thức thanh toán và xuất hoá đơn.</p>
         </div>
-        <Link to="/cart" className="text-sm font-semibold hover:underline" style={{ color: '#8b4513' }}>
+        <Link to="/cart" className="text-sm font-semibold hover:underline" style={{ color: '#1A365D' }}>
           ← Quay lại giỏ hàng
         </Link>
       </div>
@@ -179,7 +205,7 @@ export function CheckoutPage() {
                     m.tone,
                     method === m.id ? 'text-white border-transparent shadow-md' : 'bg-white text-stone-900 dark:bg-slate-950 dark:text-slate-100',
                   ].join(' ')}
-                  style={method === m.id ? { background: 'linear-gradient(135deg, #8b4513, #a0522d)' } : {}}
+                  style={method === m.id ? { background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' } : {}}
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-12 shrink-0 items-center justify-center rounded-xl bg-white p-1.5 shadow-sm border border-stone-100/50">
@@ -218,28 +244,84 @@ export function CheckoutPage() {
                       {it.quantity} × {formatVND(it.book.price)}
                     </div>
                   </div>
-                  <div className="font-semibold" style={{ color: '#8b4513' }}>{formatVND(it.quantity * it.book.price)}</div>
+                  <div className="font-semibold" style={{ color: '#1A365D' }}>{formatVND(it.quantity * it.book.price)}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="text-sm font-semibold text-slate-900">Tóm tắt</div>
-          <div className="mt-3 space-y-2 text-sm text-slate-700">
+        <div className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-3">
+          <div className="text-sm font-semibold text-slate-900">Tóm tắt đơn hàng</div>
+          <div className="space-y-2 text-sm text-slate-700">
             <div className="flex items-center justify-between">
-              <span>Số lượng</span>
+              <span>Số lượng sách</span>
               <span className="font-semibold text-slate-900">{totalQuantity}</span>
             </div>
             <div className="flex items-center justify-between">
               <span>Tạm tính</span>
               <span className="font-semibold text-slate-900">{formatVND(subtotal)}</span>
             </div>
+            <div className="flex items-center justify-between">
+              <span>Phí vận chuyển</span>
+              <span className="font-semibold text-slate-900">{formatVND(shippingFee)}</span>
+            </div>
+            {activeVoucher && (
+              <div className="flex items-center justify-between text-emerald-600 font-medium">
+                <span>Miễn phí vận chuyển ({activeVoucher})</span>
+                <span>-{formatVND(shippingDiscount)}</span>
+              </div>
+            )}
             <div className="my-2 h-px bg-slate-100" />
             <div className="flex items-center justify-between">
               <span className="font-semibold">Tổng cộng</span>
-              <span className="text-lg font-extrabold text-slate-900">{formatVND(subtotal)}</span>
+              <span className="text-lg font-extrabold text-[#1A365D] dark:text-blue-450">{formatVND(total)}</span>
+            </div>
+          </div>
+
+          {/* Shipping Vouchers */}
+          <div className="border-t border-slate-100 pt-3 space-y-2">
+            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Mã vận chuyển khả dụng</div>
+            <div className="grid gap-2">
+              {SHIPPING_VOUCHERS.map((v) => {
+                const isApplied = activeVoucher === v.code
+                return (
+                  <button
+                    key={v.code}
+                    type="button"
+                    onClick={() => {
+                      setActiveVoucher(isApplied ? null : v.code)
+                      if (!isApplied) {
+                        toast.success(`Đã áp dụng mã ${v.code}`)
+                      } else {
+                        toast.success('Đã huỷ áp dụng mã')
+                      }
+                    }}
+                    className={`flex items-center justify-between p-2.5 rounded-lg border text-left text-xs transition ${
+                      isApplied
+                        ? 'bg-emerald-50 border-emerald-500 text-emerald-800'
+                        : 'bg-slate-50 border-slate-200 hover:bg-slate-100 text-slate-700'
+                    }`}
+                  >
+                    <div>
+                      <div className="font-bold flex items-center gap-1.5">
+                        {v.code === 'FREESHIP30' ? (
+                          <img src="/icons/free-shipping.png" alt="Freeship" className="h-4.5 w-4.5 object-contain shrink-0" />
+                        ) : (
+                          <span className="text-base">🚚</span>
+                        )}
+                        {v.code}
+                      </div>
+                      <div className="text-[10px] text-slate-550 mt-0.5">{v.desc}</div>
+                    </div>
+                    <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${
+                      isApplied ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-600'
+                    }`}>
+                      {isApplied ? 'Đã dùng' : 'Áp dụng'}
+                    </span>
+                  </button>
+                )
+              })}
             </div>
           </div>
 
@@ -247,8 +329,8 @@ export function CheckoutPage() {
             type="button"
             onClick={handlePlaceOrder}
             disabled={isPlacingOrder}
-            className="mt-4 w-full rounded-xl px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-            style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
+            className="w-full rounded-xl px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+            style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}
           >
             {isPlacingOrder ? 'Đang xử lý...' : 'Tạo hoá đơn'}
           </button>

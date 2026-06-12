@@ -68,7 +68,7 @@ export function ContactPage() {
 
           <button type="submit" disabled={submitting}
             className="w-full rounded-xl py-3 text-sm font-bold text-white shadow-sm transition hover:opacity-90 disabled:opacity-60"
-            style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}>
+            style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}>
             {submitting ? '⏳ Đang gửi...' : '📤 Gửi liên hệ'}
           </button>
         </form>

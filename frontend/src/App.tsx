@@ -10,8 +10,11 @@ import { InvoicePage } from './pages/InvoicePage'
 import { NewsDetailPage } from './pages/NewsDetailPage'
 import { NewsPage } from './pages/NewsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
-import { AuthPage } from './pages/AuthPage'
+import { LoginPage } from './pages/LoginPage'
+import { RegisterPage } from './pages/RegisterPage'
 import { WishlistPage } from './pages/WishlistPage'
+import { TrendsPage } from './pages/TrendsPage'
+import { CollectionDetailPage } from './pages/CollectionDetailPage'
 import { AdminLayout } from './pages/admin/AdminLayout.tsx'
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage'
 import { AdminBooksPage } from './pages/admin/AdminBooksPage'
@@ -27,6 +30,10 @@ import { ProfilePage } from './pages/ProfilePage'
 export default function App() {
   return (
     <Routes>
+      {/* Standalone Authentication Pages */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+
       <Route element={<RootLayout />}>
         <Route index element={<HomePage />} />
         <Route path="/books" element={<BooksPage />} />
@@ -35,12 +42,12 @@ export default function App() {
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/invoice" element={<InvoicePage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
+        <Route path="/trends" element={<TrendsPage />} />
+        <Route path="/collections/:id" element={<CollectionDetailPage />} />
 
         <Route path="/news" element={<NewsPage />} />
         <Route path="/news/:id" element={<NewsDetailPage />} />
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/login" element={<Navigate to="/auth" replace />} />
-        <Route path="/register" element={<Navigate to="/auth" replace />} />
+        <Route path="/auth" element={<Navigate to="/login" replace />} />
 
         {/* Trang mới */}
         <Route path="/support" element={<SupportPage />} />

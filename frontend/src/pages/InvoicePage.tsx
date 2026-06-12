@@ -41,7 +41,7 @@ export function InvoicePage() {
         <Link
           to="/checkout"
           className="mt-4 inline-flex rounded-xl px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
-          style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
+          style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}
         >
           Đi tới Thanh toán
         </Link>
@@ -63,7 +63,7 @@ export function InvoicePage() {
             type="button"
             onClick={() => window.print()}
             className="rounded-xl px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
-            style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
+            style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}
           >
             In hoá đơn
           </button>
@@ -83,7 +83,7 @@ export function InvoicePage() {
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm print:border-none print:shadow-none">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <div className="text-sm font-bold" style={{ color: '#8b4513' }}>SachStore</div>
+            <div className="text-sm font-bold" style={{ color: '#1A365D' }}>SachStore</div>
             <div className="mt-1 text-2xl font-extrabold tracking-tight text-slate-900">INVOICE</div>
             <div className="mt-2 text-sm text-slate-600">
               Mã hoá đơn: <span className="font-semibold text-slate-900">{invoice.id}</span>
@@ -131,7 +131,7 @@ export function InvoicePage() {
                   <td className="px-4 py-3 font-semibold text-slate-900">{it.title}</td>
                   <td className="px-4 py-3 text-right text-slate-700">{formatVND(it.price)}</td>
                   <td className="px-4 py-3 text-right text-slate-700">{it.quantity}</td>
-                  <td className="px-4 py-3 text-right font-bold" style={{ color: '#8b4513' }}>
+                  <td className="px-4 py-3 text-right font-bold" style={{ color: '#1A365D' }}>
                     {formatVND(it.price * it.quantity)}
                   </td>
                 </tr>
@@ -160,7 +160,7 @@ export function InvoicePage() {
       </div>
 
       <div className="print:hidden">
-        <Link to="/" className="text-sm font-bold hover:underline" style={{ color: '#8b4513' }}>
+        <Link to="/" className="text-sm font-bold hover:underline" style={{ color: '#1A365D' }}>
           ← Về trang chủ
         </Link>
       </div>

@@ -55,7 +55,7 @@ export function AdminBooksPage() {
       {/* Page header */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#8b4513' }}>Quản trị</div>
+          <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#1A365D' }}>Quản trị</div>
           <h1 className="text-2xl font-extrabold tracking-tight text-stone-900">📚 Quản lý sách</h1>
           <p className="text-sm text-stone-500">Thêm, sửa, xóa và quản lý toàn bộ danh mục sách.</p>
         </div>
@@ -63,7 +63,7 @@ export function AdminBooksPage() {
           type="button"
           onClick={() => setShowAddForm(!showAddForm)}
           className="rounded-xl px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:opacity-90"
-          style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}>
+          style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}>
           {showAddForm ? '✕ Đóng form' : '+ Thêm sách mới'}
         </button>
       </div>
@@ -134,7 +134,7 @@ export function AdminBooksPage() {
                       {b.category?.name ?? '—'}
                     </span>
                   </td>
-                  <td className="px-4 py-3 font-bold" style={{ color: '#8b4513' }}>{formatVND(b.price)}</td>
+                  <td className="px-4 py-3 font-bold" style={{ color: '#1A365D' }}>{formatVND(b.price)}</td>
                   <td className="px-4 py-3">
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
                       (b.stock ?? 0) > 10 ? 'bg-green-100 text-green-700' :
@@ -261,7 +261,7 @@ function AddBookCard({ categories, onAdded }: { categories: Category[]; onAdded:
           <div className="md:col-span-2">
             <button type="submit" disabled={!canSubmit}
               className="w-full rounded-xl py-2.5 text-sm font-bold text-white shadow-sm transition hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}>
+              style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}>
               ✅ Thêm sách
             </button>
           </div>
@@ -344,7 +344,7 @@ function EditModal({ book, categories, onClose, onSave }: {
             <button type="button" onClick={onClose} className="rounded-xl border border-amber-200 bg-white px-4 py-2 text-sm font-semibold text-stone-700 hover:bg-amber-50 transition">Huỷ</button>
             <button type="submit" disabled={!canSubmit}
               className="rounded-xl px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:opacity-90 disabled:opacity-50"
-              style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}>
+              style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}>
               💾 Lưu thay đổi
             </button>
           </div>

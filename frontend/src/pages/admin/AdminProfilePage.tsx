@@ -73,7 +73,7 @@ export function AdminProfilePage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#8b4513' }}>
+        <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#1A365D' }}>
           Quản trị viên
         </div>
         <h1 className="text-2xl font-extrabold tracking-tight text-stone-900">Hồ sơ cá nhân</h1>
@@ -90,7 +90,7 @@ export function AdminProfilePage() {
                 <img src={user.avatarUrl} alt={name} className="h-full w-full rounded-full object-cover border border-amber-200 shadow-md ring-4 ring-amber-100" />
               ) : (
                 <div className="flex h-full w-full items-center justify-center rounded-full text-white text-4xl font-extrabold shadow-md"
-                  style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}>
+                  style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}>
                   👑
                 </div>
               )}
@@ -169,7 +169,7 @@ export function AdminProfilePage() {
                   type="button"
                   onClick={() => setIsEditing(true)}
                   className="rounded-xl px-4 py-2 text-xs font-bold text-white shadow-sm transition"
-                  style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
+                  style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}
                 >
                   Chỉnh sửa
                 </button>
@@ -216,7 +216,7 @@ export function AdminProfilePage() {
                   <button
                     type="submit"
                     className="rounded-xl px-4 py-2 text-xs font-bold text-white shadow-sm transition"
-                    style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
+                    style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}
                   >
                     Lưu thay đổi
                   </button>
@@ -313,7 +313,7 @@ export function AdminProfilePage() {
                 type="button"
                 onClick={saveAvatar}
                 className="rounded-xl px-4 py-2 text-xs font-bold text-white shadow-sm transition"
-                style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
+                style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}
               >
                 Cập nhật
               </button>

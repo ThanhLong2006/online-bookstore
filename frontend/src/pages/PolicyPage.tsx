@@ -3,7 +3,7 @@ export function PolicyPage() {
     <div className="max-w-3xl mx-auto space-y-8">
       {/* Header */}
       <div className="rounded-3xl p-8"
-        style={{ background: 'linear-gradient(135deg, #8b4513 0%, #a0522d 100%)' }}>
+        style={{ background: 'linear-gradient(135deg, #1A365D 0%, #2B6CB0 100%)' }}>
         <div className="text-4xl mb-3">🔒</div>
         <h1 className="text-3xl font-extrabold text-white mb-2">Chính sách & Bảo mật</h1>
         <p className="text-amber-100 text-sm">Cập nhật lần cuối: 01/06/2026</p>

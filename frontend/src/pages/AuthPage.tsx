@@ -166,7 +166,7 @@ export function AuthPage() {
       <div className="flex flex-col items-center justify-center space-y-2 mb-6">
         <Link to="/" className="flex flex-col items-center gap-2">
           <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl text-white text-lg font-extrabold shadow-md"
-            style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}>
+            style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}>
             S
           </span>
           <span className="text-xl font-black tracking-tight text-stone-850">SachStore</span>
@@ -289,7 +289,7 @@ export function AuthPage() {
           type="submit"
           disabled={submitting}
           className="w-full rounded-xl px-4 py-3 text-xs font-bold text-white shadow-sm transition hover:opacity-95 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60 mt-4"
-          style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}
+          style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}
         >
           {submitting ? 'Đang xử lý…' : mode === 'login' ? 'Đăng nhập' : 'Đăng ký'}
         </button>

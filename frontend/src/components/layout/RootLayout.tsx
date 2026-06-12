@@ -11,8 +11,8 @@ export function RootLayout() {
       <Header />
       <Breadcrumbs />
       <main className="flex-1 min-h-[65vh]">
-        <div className="mx-auto w-full max-w-6xl px-4 py-6">
-          <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] bg-gradient-to-b from-amber-100/30 via-amber-50/5 to-transparent dark:from-amber-950/10 dark:via-transparent dark:to-transparent" />
+        <div className="mx-auto w-full max-w-[1230px] px-4 py-6">
+          <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] bg-gradient-to-b from-blue-100/10 via-blue-50/5 to-transparent dark:from-blue-950/10 dark:via-transparent dark:to-transparent" />
           <Outlet />
         </div>
       </main>

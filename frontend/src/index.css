@@ -6,36 +6,41 @@
 :root {
   color-scheme: light;
 
-  /* Màu nền kem ấm – phù hợp đề tài sách */
-  --page-bg: #fdf6ec;
-  --page-text: #2c1a0e;
+  /* Nền và chữ */
+  --page-bg: #F7F9FA;
+  --page-text: #333333;
+  --text-heading: #212121;
 
-  /* Primary – nâu sách */
-  --primary: #8b4513;
-  --primary-light: #a0522d;
-  --primary-dark: #6b340f;
+  /* Primary – Xanh Dương Đậm */
+  --primary: #1A365D;
+  --primary-light: #2B6CB0;
+  --primary-dark: #0F2A4A;
 
-  /* Accent – vàng mật ong */
-  --accent: #d4a574;
-  --accent-light: #e8c9a0;
+  /* Accent – Cam Đất */
+  --accent: #C2410C;
+  --accent-light: #EA580C;
 
   /* Surface */
   --surface: #ffffff;
-  --surface-warm: #fef9f3;
-  --border: #e8d5bf;
-  --border-light: #f3e8d8;
+  --surface-warm: #ffffff;
+  --border: #E6E6E6;
+  --border-light: #F2F4F5;
 }
 
 .dark {
   color-scheme: dark;
-  --page-bg: #1a0f07;
-  --page-text: #f0e6d8;
-  --primary: #d4a574;
-  --primary-light: #e8c9a0;
-  --surface: #2a1a0e;
-  --surface-warm: #231408;
-  --border: #4a3020;
-  --border-light: #3a2418;
+  --page-bg: #0F172A;
+  --page-text: #E2E8F0;
+  --text-heading: #F8FAFC;
+  --primary: #3B82F6;
+  --primary-light: #60A5FA;
+  --primary-dark: #1D4ED8;
+  --accent: #F97316;
+  --accent-light: #FB923C;
+  --surface: #1E293B;
+  --surface-warm: #1E293B;
+  --border: #334155;
+  --border-light: #1E293B;
 }
 
 html,
@@ -55,11 +60,11 @@ body {
 /* Scrollbar thanh lịch */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
+::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
 /* Selection */
-::selection { background: #d4a57440; color: var(--primary-dark); }
+::selection { background: rgba(43, 108, 176, 0.2); color: var(--primary-dark); }
 
 button,
 input,
@@ -70,21 +75,29 @@ select {
 
 /* Book card hover animation */
 .book-card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .book-card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(139, 69, 19, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 8px 16px;
 }
 
-/* Warm gradient background for sections */
+/* Gray/Blue gradient background for sections */
 .section-warm {
-  background: linear-gradient(135deg, #fef9f3 0%, #fdf0e0 100%);
+  background: linear-gradient(135deg, #F0F4F8 0%, #F7F9FA 100%);
+}
+
+.dark .section-warm {
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
 }
 
 /* Badge styles */
 .badge-new {
-  background: linear-gradient(135deg, #8b4513, #a0522d);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: white;
   font-size: 0.65rem;
   font-weight: 700;
@@ -94,7 +107,7 @@ select {
 }
 
 .badge-sale {
-  background: linear-gradient(135deg, #dc2626, #ef4444);
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
   color: white;
   font-size: 0.65rem;
   font-weight: 700;

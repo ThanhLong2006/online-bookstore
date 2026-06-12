@@ -2,23 +2,23 @@ import { Link } from 'react-router-dom'
 
 export function Footer() {
   return (
-    <footer style={{ background: 'linear-gradient(180deg, #fdf6ec 0%, #fbeeda 100%)', borderTop: '1px solid #e8d5bf' }}>
-      <div className="mx-auto w-full max-w-6xl px-4 py-12">
+    <footer className="border-t border-[#E6E6E6] bg-gradient-to-b from-white to-[#F7F9FA] dark:border-slate-800 dark:from-slate-900 dark:to-slate-950 transition-colors duration-300">
+      <div className="mx-auto w-full max-w-[1230px] px-4 py-12">
         <div className="grid gap-10 md:grid-cols-12">
 
           {/* Cột 1: Thương hiệu + Thông tin Doanh nghiệp (col-span-5) */}
           <div className="space-y-4 md:col-span-5">
             <div className="flex items-center gap-2">
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-sm font-extrabold text-white shadow-md"
-                style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}>
+                style={{ background: 'linear-gradient(135deg, var(--primary), var(--primary-light))' }}>
                 S
               </span>
-              <span className="text-lg font-extrabold tracking-tight text-stone-900">SachStore</span>
+              <span className="text-lg font-black tracking-tight text-slate-805 dark:text-white">SachStore</span>
             </div>
-            <p className="text-xs font-bold text-stone-700 uppercase tracking-wide">
+            <p className="text-xs font-bold text-[#1A365D] dark:text-blue-400 uppercase tracking-wide">
               Công ty Cổ phần Sách và Thiết bị Giáo dục SachStore
             </p>
-            <div className="text-xs text-stone-500 space-y-1.5 leading-relaxed font-normal">
+            <div className="text-xs text-slate-500 space-y-1.5 leading-relaxed font-normal dark:text-slate-400">
               <div><strong>Trụ sở chính:</strong> 123 Đường Sách, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh</div>
               <div><strong>Giấy CNĐKDN số:</strong> 0109876543 do Sở KH&ĐT TP.HCM cấp ngày 10/10/2022</div>
               <div><strong>Người đại diện pháp luật:</strong> Nguyễn Văn A</div>
@@ -31,7 +31,7 @@ export function Footer() {
                   e.preventDefault()
                   window.dispatchEvent(new CustomEvent('open-mock-chat', { detail: { type: 'facebook' } }))
                 }}
-                className="group flex h-9 w-9 items-center justify-center rounded-xl border border-amber-200 bg-white shadow-sm transition hover:bg-blue-600 hover:border-blue-600"
+                className="group flex h-9 w-9 items-center justify-center rounded-xl border border-[#E6E6E6] bg-white shadow-sm transition hover:bg-blue-600 hover:border-blue-600 dark:border-slate-700 dark:bg-slate-800"
                 title="Facebook SachStore">
                 <svg viewBox="0 0 24 24" className="h-4.5 w-4.5 text-blue-600 group-hover:text-white transition" fill="currentColor">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
@@ -43,7 +43,7 @@ export function Footer() {
                   e.preventDefault()
                   window.dispatchEvent(new CustomEvent('open-mock-chat', { detail: { type: 'zalo' } }))
                 }}
-                className="group flex h-9 w-9 items-center justify-center rounded-xl border border-amber-200 bg-white shadow-sm transition hover:bg-blue-500 hover:border-blue-500"
+                className="group flex h-9 w-9 items-center justify-center rounded-xl border border-[#E6E6E6] bg-white shadow-sm transition hover:bg-blue-500 hover:border-blue-500 dark:border-slate-700 dark:bg-slate-800"
                 title="Zalo SachStore">
                 <svg viewBox="0 0 50 50" className="h-5 w-5 text-blue-500 group-hover:text-white transition" fill="currentColor">
                   <path d="M25 2C12.318 2 2 12.318 2 25c0 3.96 1.023 7.854 2.963 11.29L2.037 46.73c-.096.343.003.711.27.953A.999.999 0 0 0 3 48c.056 0 .112-.007.166-.021l10.849-2.928C17.45 46.99 21.21 48 25 48c12.682 0 23-10.318 23-23S37.682 2 25 2zM14 28h-2v-8h2v8zm4 0h-2v-8h2v8zm5 0h-2l-3-5v5h-2v-8h2l3 5v-5h2v8zm6-6h-4v1h4v2h-4v1h4v2h-6v-8h6v2z" />
@@ -54,7 +54,7 @@ export function Footer() {
 
           {/* Cột 2: Khám phá (col-span-2) */}
           <div className="md:col-span-2 md:pl-4">
-            <h3 className="mb-4 text-xs font-extrabold uppercase tracking-widest text-amber-800" style={{ color: '#8b4513' }}>Khám phá</h3>
+            <h3 className="mb-4 text-xs font-black uppercase tracking-widest text-[#1A365D] dark:text-blue-400">Khám phá</h3>
             <ul className="space-y-2.5 text-xs">
               <FooterLink to="/">Trang chủ</FooterLink>
               <FooterLink to="/books">Danh sách sách</FooterLink>
@@ -67,7 +67,7 @@ export function Footer() {
 
           {/* Cột 3: Hỗ trợ (col-span-2) */}
           <div className="md:col-span-2">
-            <h3 className="mb-4 text-xs font-extrabold uppercase tracking-widest text-amber-800" style={{ color: '#8b4513' }}>Hỗ trợ</h3>
+            <h3 className="mb-4 text-xs font-black uppercase tracking-widest text-[#1A365D] dark:text-blue-400">Hỗ trợ</h3>
             <ul className="space-y-2.5 text-xs">
               <FooterLink to="/support">Hỗ trợ khách hàng</FooterLink>
               <FooterLink to="/contact">Liên hệ trực tiếp</FooterLink>
@@ -79,7 +79,7 @@ export function Footer() {
 
           {/* Cột 4: Thanh toán & Giấy phép (col-span-3) */}
           <div className="space-y-4 md:col-span-3">
-            <h3 className="text-xs font-extrabold uppercase tracking-widest text-amber-800" style={{ color: '#8b4513' }}>Thanh toán</h3>
+            <h3 className="text-xs font-black uppercase tracking-widest text-[#1A365D] dark:text-blue-400">Thanh toán</h3>
             <div className="flex flex-wrap gap-2.5">
               {/* Visa */}
               <div className="flex h-8 w-11 items-center justify-center rounded-lg bg-white shadow-sm border border-stone-100 p-1" title="Visa / Mastercard">
@@ -108,7 +108,7 @@ export function Footer() {
               </div>
               {/* ATM */}
               <div className="flex h-8 w-11 items-center justify-center rounded-lg bg-white shadow-sm border border-stone-100 p-1" title="Thẻ ATM Nội Địa">
-                <svg viewBox="0 0 24 24" className="h-5 w-7 text-amber-800" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg viewBox="0 0 24 24" className="h-5 w-7 text-[#1A365D]" fill="none" stroke="currentColor" strokeWidth="2">
                   <rect x="2" y="5" width="20" height="14" rx="2" ry="2"/>
                   <line x1="2" y1="10" x2="22" y2="10"/>
                   <rect x="5" y="14" width="3" height="2" rx="0.5"/>
@@ -136,20 +136,20 @@ export function Footer() {
             </div>
 
             {/* Hoạt động */}
-            <div className="rounded-xl border border-amber-200 bg-white p-3 text-[11px] text-stone-500 space-y-1">
-              <div className="font-bold text-stone-750 uppercase tracking-wide">Giờ phục vụ</div>
-              <div>Thứ 2 – Thứ 6: <span className="font-semibold text-stone-750">8:00 – 21:00</span></div>
-              <div>Thứ 7 – Chủ Nhật: <span className="font-semibold text-stone-750">9:00 – 18:00</span></div>
+            <div className="rounded-xl border border-[#E6E6E6] bg-white p-3 text-[11px] text-slate-500 space-y-1 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
+              <div className="font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Giờ phục vụ</div>
+              <div>Thứ 2 – Thứ 6: <span className="font-semibold text-slate-805 dark:text-slate-200">8:00 – 21:00</span></div>
+              <div>Thứ 7 – Chủ Nhật: <span className="font-semibold text-slate-805 dark:text-slate-200">9:00 – 18:00</span></div>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-amber-200 pt-6 text-xs text-stone-400 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-[#E6E6E6] dark:border-slate-800 pt-6 text-xs text-slate-400 sm:flex-row">
           <p>© {new Date().getFullYear()} SachStore. Cửa hàng hoạt động thử nghiệm. Phát triển bởi nhóm sinh viên.</p>
           <div className="flex items-center gap-6">
-            <Link to="/policy" className="hover:text-stone-600 transition">Chính sách bảo mật</Link>
-            <Link to="/policy#terms" className="hover:text-stone-600 transition">Điều khoản sử dụng</Link>
+            <Link to="/policy" className="hover:text-slate-600 dark:hover:text-slate-305 transition">Chính sách bảo mật</Link>
+            <Link to="/policy#terms" className="hover:text-slate-600 dark:hover:text-slate-305 transition">Điều khoản sử dụng</Link>
             <span className="hidden sm:block">Visa / MoMo / ZaloPay / ATM</span>
           </div>
         </div>
@@ -162,7 +162,7 @@ function FooterLink({ to, children }: { to: string; children: React.ReactNode })
   return (
     <li>
       <Link to={to}
-        className="text-stone-500 transition hover:text-amber-800 hover:underline underline-offset-4">
+        className="text-slate-500 transition hover:text-[#1A365D] hover:underline underline-offset-4 dark:text-slate-400 dark:hover:text-blue-400">
         {children}
       </Link>
     </li>

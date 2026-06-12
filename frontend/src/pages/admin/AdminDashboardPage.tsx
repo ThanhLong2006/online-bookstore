@@ -86,7 +86,7 @@ export function AdminDashboardPage() {
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#8b4513' }}>Quản trị viên</div>
+          <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#1A365D' }}>Quản trị viên</div>
           <h1 className="text-2xl font-extrabold tracking-tight text-stone-900">Dashboard tổng quan</h1>
           <p className="text-sm text-stone-500">Xem nhanh tình hình kinh doanh của hiệu sách.</p>
         </div>
@@ -130,7 +130,7 @@ export function AdminDashboardPage() {
                       className="w-full rounded-t-lg transition-all duration-300 group-hover:opacity-90"
                       style={{ 
                         height: `${pct}%`, 
-                        background: 'linear-gradient(to top, #8b4513, #cd853f)',
+                        background: 'linear-gradient(to top, #1A365D, #cd853f)',
                         boxShadow: '0 4px 12px rgba(139, 69, 19, 0.12)'
                       }}
                     />
@@ -163,7 +163,7 @@ export function AdminDashboardPage() {
                   <div className="text-[10px] text-stone-500 mt-0.5">{book.sales} lượt bán</div>
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-xs font-bold" style={{ color: '#8b4513' }}>{formatVND(book.revenue)}</div>
+                  <div className="text-xs font-bold" style={{ color: '#1A365D' }}>{formatVND(book.revenue)}</div>
                 </div>
               </div>
             ))}
@@ -206,7 +206,7 @@ export function AdminDashboardPage() {
                       {labelStatus(o.status)}
                     </span>
                   </td>
-                  <td className="px-5 py-3 text-right font-bold" style={{ color: '#8b4513' }}>{formatVND(o.total)}</td>
+                  <td className="px-5 py-3 text-right font-bold" style={{ color: '#1A365D' }}>{formatVND(o.total)}</td>
                 </tr>
               ))}
             </tbody>

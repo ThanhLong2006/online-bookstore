@@ -13,7 +13,7 @@ export function SupportPage() {
     <div className="space-y-8">
       {/* Header */}
       <div className="rounded-3xl p-8 text-center"
-        style={{ background: 'linear-gradient(135deg, #8b4513 0%, #a0522d 100%)' }}>
+        style={{ background: 'linear-gradient(135deg, #1A365D 0%, #2B6CB0 100%)' }}>
         <div className="text-4xl mb-3">📞</div>
         <h1 className="text-3xl font-extrabold text-white mb-2">Hỗ trợ khách hàng</h1>
         <p className="text-amber-100 text-sm max-w-md mx-auto">
@@ -36,7 +36,7 @@ export function SupportPage() {
           >
             <div className="text-3xl mb-2">{c.icon}</div>
             <div className="font-bold text-stone-900">{c.title}</div>
-            <div className="text-sm font-semibold mt-1" style={{ color: '#8b4513' }}>{c.desc}</div>
+            <div className="text-sm font-semibold mt-1" style={{ color: '#1A365D' }}>{c.desc}</div>
             <div className="text-xs text-stone-400 mt-0.5">{c.sub}</div>
           </button>
         ))}
@@ -62,7 +62,7 @@ export function SupportPage() {
 
       <div className="text-center">
         <Link to="/contact" className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white shadow-sm hover:opacity-90 transition"
-          style={{ background: 'linear-gradient(135deg, #8b4513, #a0522d)' }}>
+          style={{ background: 'linear-gradient(135deg, #1A365D, #2B6CB0)' }}>
           📮 Gửi yêu cầu hỗ trợ →
         </Link>
       </div>

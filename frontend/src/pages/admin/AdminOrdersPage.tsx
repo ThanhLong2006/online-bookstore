@@ -47,7 +47,7 @@ export function AdminOrdersPage() {
   return (
     <div className="space-y-5">
       <div>
-        <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#8b4513' }}>Quản trị</div>
+        <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#1A365D' }}>Quản trị</div>
         <h1 className="text-2xl font-extrabold tracking-tight text-stone-900">📦 Quản lý đơn hàng</h1>
         <p className="text-sm text-stone-500">Theo dõi và cập nhật trạng thái đơn hàng.</p>
       </div>
@@ -55,7 +55,7 @@ export function AdminOrdersPage() {
       {/* Stats row */}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
-          { label: 'Tổng đơn',    value: stats.total,             icon: '📋', color: '#8b4513' },
+          { label: 'Tổng đơn',    value: stats.total,             icon: '📋', color: '#1A365D' },
           { label: 'Chờ xử lý',  value: stats.pending,           icon: '⏳', color: '#d97706' },
           { label: 'Đang giao',  value: stats.shipped,           icon: '🚚', color: '#2563eb' },
           { label: 'Doanh thu',  value: formatVND(stats.revenue), icon: '💰', color: '#16a34a' },
@@ -107,7 +107,7 @@ export function AdminOrdersPage() {
                         {cfg.label}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-right font-bold" style={{ color: '#8b4513' }}>{formatVND(o.total)}</td>
+                    <td className="px-4 py-3 text-right font-bold" style={{ color: '#1A365D' }}>{formatVND(o.total)}</td>
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-1.5">
                         <button className="rounded-lg border border-amber-200 bg-white px-2.5 py-1 text-xs font-semibold text-stone-700 hover:bg-amber-50 transition">
