@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 const faqs = [
   { q: 'Làm thế nào để đặt hàng?', a: 'Chọn sách bạn muốn mua, thêm vào giỏ hàng, rồi tiến hành thanh toán. Chúng tôi hỗ trợ nhiều phương thức thanh toán.' },
@@ -9,6 +10,25 @@ const faqs = [
 ]
 
 export function SupportPage() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const hash = location.hash
+    if (hash) {
+      const element = document.querySelector(hash)
+      if (element) {
+        const timer = setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          element.classList.add('ring-4', 'ring-blue-500/30', 'border-blue-400')
+          setTimeout(() => {
+            element.classList.remove('ring-4', 'ring-blue-500/30', 'border-blue-400')
+          }, 2500)
+        }, 150)
+        return () => clearTimeout(timer)
+      }
+    }
+  }, [location.hash])
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -22,7 +42,7 @@ export function SupportPage() {
       </div>
 
       {/* Quick contact cards */}
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div id="contact" className="grid gap-4 sm:grid-cols-3 transition-all duration-300 rounded-2xl">
         {[
           { icon: '📧', title: 'Email', desc: 'support@sachstore.vn', sub: 'Phản hồi trong 2-4 giờ', action: () => { window.location.href = 'mailto:support@sachstore.vn' } },
           { icon: '📱', title: 'Hotline', desc: '1800 1234', sub: 'Miễn phí • 8:00 – 21:00', action: () => { window.location.href = 'tel:18001234' } },
@@ -43,7 +63,7 @@ export function SupportPage() {
       </div>
 
       {/* FAQ */}
-      <div className="rounded-2xl border border-amber-200 bg-white p-6 shadow-sm">
+      <div id="faq" className="rounded-2xl border border-amber-200 bg-white p-6 shadow-sm transition-all duration-300">
         <h2 className="text-xl font-bold text-stone-900 mb-5">❓ Câu hỏi thường gặp</h2>
         <div className="space-y-4">
           {faqs.map((item, i) => (
@@ -69,3 +89,4 @@ export function SupportPage() {
     </div>
   )
 }
+

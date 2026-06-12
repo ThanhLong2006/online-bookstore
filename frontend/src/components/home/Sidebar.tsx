@@ -42,34 +42,36 @@ export function HomeSidebar({
         </div>
       </Box>
 
-      {/* Thông báo / Tin tức */}
-      <Box
-        title="📢 Thông báo / Tin tức"
-        action={
-          <Link to="/news" className="text-xs font-bold text-[#1A365D] hover:underline dark:text-blue-400">
+      {/* Bảng tin hot / Sự kiện */}
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
+        {/* Prominent dark header */}
+        <div className="bg-gradient-to-r from-[#1A365D] to-[#2D3F59] dark:from-slate-950 dark:to-slate-850 px-4 py-3 flex items-center justify-between gap-3">
+          <div className="text-xs font-black uppercase tracking-wider text-white">🔥 BẢNG TIN HOT / SỰ KIỆN</div>
+          <Link to="/news" className="text-[11px] font-black uppercase tracking-wider text-amber-300 hover:underline dark:text-amber-400">
             Xem thêm
           </Link>
-        }
-      >
-        <div className="space-y-2.5">
+        </div>
+
+        <div className="p-4 space-y-3">
           {news?.map((n) => (
             <Link
               key={n.id}
               to={`/news/${n.id}`}
-              className="block rounded-lg border border-[#E6E6E6] bg-[#F7F9FA] p-3 transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-850 dark:hover:bg-slate-800"
+              className="group block rounded-lg bg-slate-50/40 hover:bg-slate-50 dark:bg-slate-850/20 dark:hover:bg-slate-850/60 p-3 transition duration-300 border border-slate-100 dark:border-slate-800/50"
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="rounded px-2 py-0.5 text-[9px] font-bold text-white"
-                  style={{ background: '#1A365D' }}>
+                <span className="rounded px-2 py-0.5 text-[9px] font-bold text-white bg-[#C2410C] dark:bg-orange-650">
                   {n.tag}
                 </span>
                 <span className="text-[10px] text-slate-450 dark:text-slate-400">{n.date}</span>
               </div>
-              <div className="mt-1.5 line-clamp-2 text-xs font-bold text-slate-805 dark:text-slate-200 leading-relaxed">{n.title}</div>
+              <div className="mt-2 line-clamp-2 text-xs font-bold text-slate-800 dark:text-slate-200 leading-relaxed transform group-hover:translate-x-1.5 transition-transform duration-300">
+                {n.title}
+              </div>
             </Link>
           ))}
         </div>
-      </Box>
+      </div>
     </aside>
   )
 }

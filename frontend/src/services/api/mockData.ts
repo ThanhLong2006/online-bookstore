@@ -6,6 +6,9 @@ export const mockCategories: Category[] = [
   { id: 'self-help', name: 'Kỹ năng', slug: 'ky-nang' },
   { id: 'tech', name: 'Công nghệ', slug: 'cong-nghe' },
   { id: 'kids', name: 'Thiếu nhi', slug: 'thieu-nhi' },
+  { id: 'foreign', name: 'Ngoại văn', slug: 'ngoai-van' },
+  { id: 'comics', name: 'Manga / Comic', slug: 'manga-comic' },
+  { id: 'education', name: 'Giáo khoa', slug: 'giao-khoa' },
 ]
 
 const now = Date.now()
@@ -247,7 +250,7 @@ export const mockBooks: Book[] = [
     sold: 22000,
     views: 190000,
     coverUrl: 'https://covers.openlibrary.org/b/id/8228690-L.jpg',
-    category: mockCategories.find((c) => c.id === 'fiction'),
+    category: mockCategories.find((c) => c.id === 'foreign'),
     stock: 15,
     createdAt: new Date(now - 1000 * 60 * 60 * 24 * 16).toISOString(),
     description: 'Sapiens đưa độc giả vào một hành trình kinh ngạc qua toàn bộ lịch sử loài người, từ những vượn nhân hình đầu tiên cho đến kỷ nguyên hiện đại.',
@@ -476,7 +479,7 @@ export const mockBooks: Book[] = [
     sold: 11000,
     views: 95000,
     coverUrl: 'https://covers.openlibrary.org/b/id/10433246-L.jpg',
-    category: mockCategories.find((c) => c.id === 'kids'),
+    category: mockCategories.find((c) => c.id === 'comics'),
     stock: 15,
     createdAt: new Date(now - 1000 * 60 * 60 * 24 * 28).toISOString(),
   },
@@ -533,7 +536,7 @@ export const mockBooks: Book[] = [
     sold: 45000,
     views: 310000,
     coverUrl: 'https://covers.openlibrary.org/b/id/8225266-L.jpg',
-    category: mockCategories.find((c) => c.id === 'business'),
+    category: mockCategories.find((c) => c.id === 'education'),
     stock: 40,
     createdAt: new Date(now - 1000 * 60 * 60 * 24 * 31).toISOString(),
   },
@@ -829,11 +832,18 @@ export function mockGetHomeSections() {
 
   const banners = [
     {
+      id: 'bn-author',
+      title: 'Tác giả của tháng',
+      subtitle: 'Nguyễn Nhật Ánh',
+      imageUrl: '/icons/author-avatar.png',
+      href: '/books?q=Nguy%E1%BB%85n%20Nh%E1%BA%ADt%20%C3%81nh',
+    },
+    {
       id: 'bn-1',
       title: 'Siêu sale tuần này',
       subtitle: 'Giảm đến 30% cho sách kỹ năng & công nghệ',
       imageUrl: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1600&q=80',
-      href: '/books?sort=price_desc',
+      href: '/collections/tech',
     },
     {
       id: 'bn-2',
@@ -847,7 +857,7 @@ export function mockGetHomeSections() {
       title: 'Bộ sưu tập nổi bật',
       subtitle: 'Top sách được xem nhiều trong cộng đồng',
       imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1600&q=80',
-      href: '/books',
+      href: '/collections/business',
     },
   ]
 
